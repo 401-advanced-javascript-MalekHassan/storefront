@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { activate } from '../../store/state';
+import { activate } from '../../store/categorystate';
 import { makeStyles } from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Categories = (props) => {
+  // console.log(props.category);
   const classes = useStyles();
   return (
     <section>
@@ -31,7 +32,7 @@ const Categories = (props) => {
         }
         className={classes.root}
       >
-        {props.store.categories.map((category) => {
+        {props.category.categories.map((category) => {
           return (
             <ListItem
               button
@@ -48,7 +49,7 @@ const Categories = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { store: state.category };
+  return { category: state.category };
 };
 
 const mapDispatchToProps = { activate };
