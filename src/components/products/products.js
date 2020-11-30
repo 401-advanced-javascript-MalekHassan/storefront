@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { AddToCart } from '../../store/cartstate';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,21 +25,21 @@ const useStyles = makeStyles({
 });
 
 const Products = (props) => {
-  // console.log(props, 'kjhgd');
+  console.log(props.product.products, 'kjhgd');
   const classes = useStyles();
-  let activated = props.store.categories.filter(
-    (category) => category.name === props.store.activeCategory
+  let activated = props.category.categories.filter(
+    (category) => category.name === props.category.ChosenCategory
   );
+  console.log('activated', activated);
   return (
     <section className={classes.grid}>
       <div className={classes.title}>
-        {console.log(activated, 'iiiii')}
         <Typography variant="h3">{activated[0].displayName}</Typography>
         <Typography variant="body1">{activated[0].description}</Typography>
       </div>
       <Grid container spacing={3}>
-        {props.store.products.map((product) => {
-          if (product.category === props.store.activeCategory) {
+        {props.product.products.map((product) => {
+          if (product.category === props.category.ChosenCategory) {
             return (
               <Grid item xs={3}>
                 <Card className={classes.root}>
@@ -54,10 +55,18 @@ const Products = (props) => {
                       <Typography gutterBottom variant="h5" component="h2">
                         {product.name}
                       </Typography>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {product.inStock}
+                      </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button
+                      size="small"
+                      color="primary"
+                      key={product.name}
+                      onClick={() => props.AddToCart(product.name)}
+                    >
                       Add To Cart
                     </Button>
                     <Button size="small" color="primary">
@@ -75,7 +84,8 @@ const Products = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { store: state.category };
+  return { category: state.category, product: state.product };
 };
+const mapDispatchToProps = { AddToCart };
 
-export default connect(mapStateToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

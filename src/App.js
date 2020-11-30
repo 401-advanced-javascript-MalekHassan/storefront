@@ -2,6 +2,7 @@ import Header from './components/header/header';
 import Categories from './components/categories/categories.js';
 import Products from './components/products/products';
 import { makeStyles } from '@material-ui/core/styles';
+import Cart from './components/cart/cart';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +18,7 @@ function App() {
     <>
       <Header />
       <div className={classes.root}>
+        <Cart />
         <Grid container spacing={3}>
           <Grid item xs={2}>
             <Categories />

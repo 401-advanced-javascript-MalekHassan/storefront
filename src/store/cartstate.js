@@ -1,9 +1,4 @@
 const initialState = {
-  categories: [
-    { name: 'electronics', displayName: 'Elecronics', description: 'Iphone' },
-    { name: 'food', displayName: 'Food', description: 'eat' },
-    { name: 'clothing', displayName: 'Clothing', description: 'wear' },
-  ],
   products: [
     {
       name: 'TV',
@@ -61,30 +56,33 @@ const initialState = {
         'https://toppng.com/uploads/preview/bread-png-image-loaf-of-bread-11563103187ssm8yazedr.png',
     },
   ],
-  activeCategory: 'electronics',
+  cart: [],
 };
+
 export default (state = initialState, action) => {
   const { type, payload } = action;
-  console.log('payload', payload);
+  // console.log('payload', payload);
   switch (type) {
-    case 'ACTIVATED':
+    case 'AddToCart':
       let newArray = initialState.products.filter(
-        (product) => product.category === payload
+        (product) => product.name === payload
       );
+      // console.log(state, 'alalalala');
+      let arrayCart = [...state.cart];
+      arrayCart.push(newArray[0]);
       return {
-        categories: state.categories,
-        products: newArray,
-        activeCategory: payload,
+        products: state.products,
+        cart: arrayCart,
       };
     default:
       return state;
   }
 };
 
-export const activate = (name) => {
+export const AddToCart = (name) => {
   console.log('name', name);
   return {
-    type: 'ACTIVATED',
+    type: 'AddToCart',
     payload: name,
   };
 };
